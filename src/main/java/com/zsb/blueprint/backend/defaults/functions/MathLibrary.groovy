@@ -5,14 +5,14 @@ import com.zsb.blueprint.backend.core.annotations.BlueprintFunctionLibrary
 import com.zsb.blueprint.backend.core.annotations.ParamInput
 import com.zsb.blueprint.backend.core.annotations.ParamOutput
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper
-import com.zsb.blueprint.backend.defaults.types.Student
+import com.zsb.blueprint.backend.defaults.types.School
 
 import java.time.LocalDateTime
 
 @BlueprintFunctionLibrary
 class MathLibrary {
 
-    @BlueprintFunction(displayName = "MathLibrary.TestAdd")
+//    @BlueprintFunction(displayName = "MathLibrary.TestAdd")
     static void TestAdd(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
             @ParamInput("Num2") ParamWrapper<Integer> Num2,
@@ -32,7 +32,7 @@ class MathLibrary {
         Product.value = Num1.value * Num2.value
     }
 
-    @BlueprintFunction(displayName = "MathLibrary.TestAddList")
+//    @BlueprintFunction(displayName = "MathLibrary.TestAddList")
     static void TestAddList(
             @ParamInput("NumsList") ParamWrapper<List<Integer>> NumsList,
             @ParamOutput("Sum") ParamWrapper<Integer> Sum
@@ -43,7 +43,7 @@ class MathLibrary {
         }
     }
 
-    @BlueprintFunction(displayName = "MathLibrary.TestReverseList")
+//    @BlueprintFunction(displayName = "MathLibrary.TestReverseList")
     static void TestReverseList(
             @ParamInput("InputList") ParamWrapper<List<Integer>> InputList,
             @ParamOutput("OutputList") ParamWrapper<List<Integer>> OutputList
@@ -64,7 +64,7 @@ class MathLibrary {
     @BlueprintFunction(displayName = "MathLibrary.TestComplexType")
     static void TestComplexType(
             @ParamInput("Param1") ParamWrapper<Map<String, Integer>> Param1,
-            @ParamInput("Param2") ParamWrapper<List<Student>> Param2,
+            @ParamInput("Param2") ParamWrapper<List<School>> Param2,
             @ParamOutput("Param3") ParamWrapper<Integer> Param3
     ) {
         println Param1
