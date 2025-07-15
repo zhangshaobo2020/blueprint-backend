@@ -4,6 +4,7 @@ import com.zsb.blueprint.backend.core.annotations.BlueprintFunction
 import com.zsb.blueprint.backend.core.annotations.ParamInput
 import com.zsb.blueprint.backend.core.annotations.ParamOutput
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper
+import com.zsb.blueprint.backend.custom.types.Student
 
 import java.time.LocalDateTime
 
@@ -56,5 +57,16 @@ class MathLibrary {
             @ParamOutput("After") ParamWrapper<LocalDateTime> After
     ) {
         After.value = Now.value.plusDays(Days.value)
+    }
+
+    @BlueprintFunction(displayName = "MathLibrary.TestComplexType")
+    static void TestComplexType(
+            @ParamInput("Param1") ParamWrapper<Map<String, Integer>> Param1,
+            @ParamInput("Param2") ParamWrapper<List<Student>> Param2,
+            @ParamOutput("Param3") ParamWrapper<Integer> Param3
+    ) {
+        println Param1
+        println Param2
+        println Param3
     }
 }

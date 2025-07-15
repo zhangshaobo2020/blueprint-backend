@@ -10,10 +10,11 @@ import java.util.*;
 
 public class TypeResolver {
 
-    private static final Set<Class<?>> PRIMITIVE_CLASSES;
+    private static final Map<Type, TypeDefinition> TYPE_CACHE = new HashMap<>();
+
+    public static final Set<Class<?>> PRIMITIVE_CLASSES = new HashSet<>();
 
     static {
-        PRIMITIVE_CLASSES = new HashSet<>();
         PRIMITIVE_CLASSES.add(java.lang.String.class);
         PRIMITIVE_CLASSES.add(java.lang.Integer.class);
         PRIMITIVE_CLASSES.add(java.lang.Long.class);
@@ -31,9 +32,16 @@ public class TypeResolver {
     }
 
     public static TypeDefinition resolveType(Type genericType) {
+        // 判断缓存中有没有，避免递归死循环
+        if (TYPE_CACHE.containsKey(genericType)) {
+            return TYPE_CACHE.get(genericType);
+        }
+
         TypeDefinition def = new TypeDefinition();
         def.setGenerics(new ArrayList<>());
         def.setFields(new HashMap<>());
+
+        TYPE_CACHE.put(genericType, def); // 提前放入缓存
 
         if (genericType instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) genericType;
