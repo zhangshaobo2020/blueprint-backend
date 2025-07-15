@@ -2,6 +2,7 @@ package com.zsb.blueprint.backend.tests;
 
 import com.zsb.blueprint.backend.core.definition.FunctionDefinition;
 import com.zsb.blueprint.backend.core.resolver.FunctionResolver;
+import com.zsb.blueprint.backend.defaults.functions.MathLibrary;
 
 import java.util.List;
 

@@ -10,13 +10,15 @@ import javax.annotation.Resource;
 public class BlueprintInitializer implements ApplicationRunner {
 
     @Resource
-    private BlueprintTypeScanner blueprintTypeScanner;
+    private BlueprintScanner blueprintScanner;
 
     @Override
     public void run(ApplicationArguments args) {
         // 解析默认的内置Java类型
-        blueprintTypeScanner.processPrimitive();
+        blueprintScanner.processDefaultType();
         // 扫描自定义的@BlueprintType
-        blueprintTypeScanner.scanCustom("com.zsb.blueprint.backend.custom.types");
+        blueprintScanner.processBlueprintType("com.zsb.blueprint.backend.defaults.types");
+        // 扫描自定义的@BlueprintFunctionLibrary
+        blueprintScanner.processBlueprintFunction("com.zsb.blueprint.backend.defaults.functions");
     }
 }

@@ -1,13 +1,15 @@
-package com.zsb.blueprint.backend.tests
+package com.zsb.blueprint.backend.defaults.functions
 
 import com.zsb.blueprint.backend.core.annotations.BlueprintFunction
+import com.zsb.blueprint.backend.core.annotations.BlueprintFunctionLibrary
 import com.zsb.blueprint.backend.core.annotations.ParamInput
 import com.zsb.blueprint.backend.core.annotations.ParamOutput
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper
-import com.zsb.blueprint.backend.custom.types.Student
+import com.zsb.blueprint.backend.defaults.types.Student
 
 import java.time.LocalDateTime
 
+@BlueprintFunctionLibrary
 class MathLibrary {
 
     @BlueprintFunction(displayName = "MathLibrary.TestAdd")

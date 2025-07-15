@@ -1,25 +1,26 @@
 package com.zsb.blueprint.backend.web.controller;
 
-import com.zsb.blueprint.backend.core.config.BlueprintTypeScanner;
+import com.zsb.blueprint.backend.core.config.BlueprintScanner;
+import com.zsb.blueprint.backend.core.definition.FunctionDefinition;
 import com.zsb.blueprint.backend.core.definition.TypeDefinition;
 import com.zsb.blueprint.backend.web.unify.WebResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/blueprint/global")
 public class BlueprintGlobalController {
 
-    @Resource
-    private BlueprintTypeScanner blueprintTypeScanner;
+    @PostMapping("/typeDefinition")
+    public WebResult<Map<String, TypeDefinition>> typeDefinition() throws Exception {
+        return WebResult.success(BlueprintScanner.TYPE_DEFINITION);
+    }
 
-    @PostMapping("/test")
-    public WebResult<Map<String, TypeDefinition>> test() throws Exception {
-        Map<String, TypeDefinition> definitionMap = blueprintTypeScanner.getTypeMap();
-        return WebResult.success(definitionMap);
+    @PostMapping("/functionDefinition")
+    public WebResult<Map<String, FunctionDefinition>> functionDefinition() throws Exception {
+        return WebResult.success(BlueprintScanner.FUNCTION_DEFINITION);
     }
 }
