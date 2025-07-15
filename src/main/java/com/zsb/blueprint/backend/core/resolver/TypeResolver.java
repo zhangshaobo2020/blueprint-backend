@@ -6,16 +6,34 @@ import com.zsb.blueprint.backend.core.definition.TypeDefinition;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class TypeResolver {
+
+    private static final Set<Class<?>> PRIMITIVE_CLASSES;
+
+    static {
+        PRIMITIVE_CLASSES = new HashSet<>();
+        PRIMITIVE_CLASSES.add(java.lang.String.class);
+        PRIMITIVE_CLASSES.add(java.lang.Integer.class);
+        PRIMITIVE_CLASSES.add(java.lang.Long.class);
+        PRIMITIVE_CLASSES.add(java.lang.Double.class);
+        PRIMITIVE_CLASSES.add(java.lang.Float.class);
+        PRIMITIVE_CLASSES.add(java.lang.Boolean.class);
+        PRIMITIVE_CLASSES.add(java.lang.Character.class);
+        PRIMITIVE_CLASSES.add(java.lang.Short.class);
+        PRIMITIVE_CLASSES.add(java.lang.Byte.class);
+        PRIMITIVE_CLASSES.add(java.math.BigDecimal.class);
+        PRIMITIVE_CLASSES.add(java.util.Date.class);
+        PRIMITIVE_CLASSES.add(java.time.LocalDate.class);
+        PRIMITIVE_CLASSES.add(java.time.LocalTime.class);
+        PRIMITIVE_CLASSES.add(java.time.LocalDateTime.class);
+    }
 
     public static TypeDefinition resolveType(Type genericType) {
         TypeDefinition def = new TypeDefinition();
         def.setGenerics(new ArrayList<>());
+        def.setFields(new HashMap<>());
 
         if (genericType instanceof ParameterizedType) {
             ParameterizedType pt = (ParameterizedType) genericType;
@@ -58,11 +76,7 @@ public class TypeResolver {
     }
 
     private static boolean isPrimitive(Class<?> clazz) {
-        return clazz.isPrimitive()
-                || clazz.equals(String.class)
-                || Number.class.isAssignableFrom(clazz)
-                || clazz.equals(Boolean.class)
-                || clazz.equals(Character.class);
+        return clazz.isPrimitive() || PRIMITIVE_CLASSES.contains(clazz);
     }
 
     private static Map<String, TypeDefinition> resolveFields(Class<?> clazz) {

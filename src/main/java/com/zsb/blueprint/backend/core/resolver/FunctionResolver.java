@@ -22,6 +22,7 @@ public class FunctionResolver {
             if (!method.isAnnotationPresent(BlueprintFunction.class)) continue;
 
             BlueprintFunction bf = method.getAnnotation(BlueprintFunction.class);
+            if (bf == null) continue;
 
             FunctionDefinition func = new FunctionDefinition();
             func.setName(method.getName());
@@ -47,13 +48,11 @@ public class FunctionResolver {
     }
 
     private static String getParamName(Parameter parameter) {
-        if (parameter.isAnnotationPresent(ParamInput.class)) {
-            return parameter.getAnnotation(ParamInput.class).value();
-        }
-        if (parameter.isAnnotationPresent(ParamOutput.class)) {
-            return parameter.getAnnotation(ParamOutput.class).value();
-        }
-        return parameter.getName(); // fallback
+        ParamInput paramInput = parameter.getAnnotation(ParamInput.class);
+        if (paramInput != null) return paramInput.value();
+        ParamOutput paramOutput = parameter.getAnnotation(ParamOutput.class);
+        if (paramOutput != null) return paramOutput.value();
+        throw new IllegalArgumentException("参数必须由@ParamInput或@ParamOutput注解，但实际是" + parameter.getName());
     }
 
     private static TypeDefinition resolveParamType(Type paramType) {
@@ -69,7 +68,7 @@ public class FunctionResolver {
             }
         }
 
-        throw new IllegalArgumentException("参数类型必须是 ParamWrapper<T>，但发现了：" + paramType);
+        throw new IllegalArgumentException("参数类型必须是ParamWrapper<T>，但实际是" + paramType);
     }
 }
 

@@ -5,9 +5,11 @@ import com.zsb.blueprint.backend.core.annotations.ParamInput
 import com.zsb.blueprint.backend.core.annotations.ParamOutput
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper
 
+import java.time.LocalDateTime
+
 class MathLibrary {
 
-    @BlueprintFunction()
+    @BlueprintFunction(displayName = "MathLibrary.TestAdd")
     static void TestAdd(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
             @ParamInput("Num2") ParamWrapper<Integer> Num2,
@@ -16,7 +18,7 @@ class MathLibrary {
         Sum.value = Num1.value + Num2.value
     }
 
-    @BlueprintFunction()
+    @BlueprintFunction(displayName = "MathLibrary.TestAddAndMultiple")
     static void TestAddAndMultiple(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
             @ParamInput("Num2") ParamWrapper<Integer> Num2,
@@ -27,7 +29,7 @@ class MathLibrary {
         Product.value = Num1.value * Num2.value
     }
 
-    @BlueprintFunction()
+    @BlueprintFunction(displayName = "MathLibrary.TestAddList")
     static void TestAddList(
             @ParamInput("NumsList") ParamWrapper<List<Integer>> NumsList,
             @ParamOutput("Sum") ParamWrapper<Integer> Sum
@@ -38,12 +40,21 @@ class MathLibrary {
         }
     }
 
-    @BlueprintFunction()
+    @BlueprintFunction(displayName = "MathLibrary.TestReverseList")
     static void TestReverseList(
             @ParamInput("InputList") ParamWrapper<List<Integer>> InputList,
             @ParamOutput("OutputList") ParamWrapper<List<Integer>> OutputList
     ) {
         OutputList.value = new ArrayList<>(InputList.value)
         Collections.reverse(OutputList.value)
+    }
+
+    @BlueprintFunction(displayName = "MathLibrary.TestAddDays")
+    static void TestAddDays(
+            @ParamInput("Now") ParamWrapper<LocalDateTime> Now,
+            @ParamInput("Days") ParamWrapper<Integer> Days,
+            @ParamOutput("After") ParamWrapper<LocalDateTime> After
+    ) {
+        After.value = Now.value.plusDays(Days.value)
     }
 }

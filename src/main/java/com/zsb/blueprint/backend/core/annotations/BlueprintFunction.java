@@ -9,11 +9,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BlueprintFunction {
 
-    String displayName() default "默认名称";            // 蓝图编辑器上展示的名称
+    String displayName() default "默认名称";           // 蓝图编辑器上展示的名称
 
-    String description() default "默认详细描述";         // 蓝图编辑器上展示的详细描述
+    String description() default "";                  // 蓝图编辑器上展示的详细描述
 
-    String category() default "默认分类";               // 蓝图编辑器上展示的分类
+    String category() default "默认分类";              // 蓝图编辑器上展示的分类
 
     boolean executable() default true;                // 是否是executable节点
 
