@@ -1,10 +1,9 @@
 package com.zsb.blueprint.backend.web.controller;
 
 import com.zsb.blueprint.backend.core.config.BlueprintScanner;
-import com.zsb.blueprint.backend.core.definition.ControlFlowDefinition;
+import com.zsb.blueprint.backend.core.definition.ControlDefinition;
 import com.zsb.blueprint.backend.core.definition.FunctionDefinition;
 import com.zsb.blueprint.backend.core.definition.TypeDefinition;
-import com.zsb.blueprint.backend.core.resolver.ControlFlowResolver;
 import com.zsb.blueprint.backend.web.unify.WebResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +25,8 @@ public class BlueprintGlobalController {
         return WebResult.success(BlueprintScanner.FUNCTION_DEFINITION);
     }
 
-    @PostMapping("/controlFlowDefinition")
-    public WebResult<Map<String, ControlFlowDefinition>> controlFlowDefinition() throws Exception {
-        return WebResult.success(ControlFlowResolver.CONTROL_FLOW_DEFINITION);
+    @PostMapping("/controlDefinition")
+    public WebResult<Map<String, ControlDefinition>> controlDefinition() throws Exception {
+        return WebResult.success(BlueprintScanner.CONTROL_DEFINITION);
     }
 }

@@ -15,19 +15,19 @@ public class TypeResolver {
     public static final Set<Class<?>> PRIMITIVE_CLASSES = new HashSet<>();
 
     static {
-        PRIMITIVE_CLASSES.add(java.lang.String.class);
+        PRIMITIVE_CLASSES.add(java.lang.Byte.class);
+        PRIMITIVE_CLASSES.add(java.lang.Short.class);
         PRIMITIVE_CLASSES.add(java.lang.Integer.class);
         PRIMITIVE_CLASSES.add(java.lang.Long.class);
-        PRIMITIVE_CLASSES.add(java.lang.Double.class);
+
         PRIMITIVE_CLASSES.add(java.lang.Float.class);
+        PRIMITIVE_CLASSES.add(java.lang.Double.class);
         PRIMITIVE_CLASSES.add(java.lang.Boolean.class);
         PRIMITIVE_CLASSES.add(java.lang.Character.class);
-        PRIMITIVE_CLASSES.add(java.lang.Short.class);
-        PRIMITIVE_CLASSES.add(java.lang.Byte.class);
+
+        PRIMITIVE_CLASSES.add(java.lang.String.class);
         PRIMITIVE_CLASSES.add(java.math.BigDecimal.class);
         PRIMITIVE_CLASSES.add(java.util.Date.class);
-        PRIMITIVE_CLASSES.add(java.time.LocalDate.class);
-        PRIMITIVE_CLASSES.add(java.time.LocalTime.class);
         PRIMITIVE_CLASSES.add(java.time.LocalDateTime.class);
     }
 

@@ -23,17 +23,21 @@ class MathLibrary {
 
     @BlueprintFunction(
             executable = false,
-            displayName = "测试多输出节点",
-            description = "输出两个整数的和以及乘积"
+            displayName = "测试多输出",
+            description = "输出两个整数的四则运算结果"
     )
     static void TestAddAndMultiple(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
             @ParamInput("Num2") ParamWrapper<Integer> Num2,
-            @ParamOutput("Sum") ParamWrapper<Integer> Sum,
-            @ParamOutput("Product") ParamWrapper<Integer> Product
+            @ParamOutput("Add") ParamWrapper<Integer> Add,
+            @ParamOutput("Sub") ParamWrapper<Long> Sub,
+            @ParamOutput("Multi") ParamWrapper<Float> Multi,
+            @ParamOutput("Div") ParamWrapper<Double> Div
     ) {
-        Sum.value = Num1.value + Num2.value
-        Product.value = Num1.value * Num2.value
+        Add.value = Num1.value + Num2.value
+        Sub.value = Num1.value - Num2.value
+        Multi.value = Num1.value * Num2.value
+        Div.value = Num1.value / Num2.value
     }
 
 //    @BlueprintFunction(displayName = "MathLibrary.TestAddList")

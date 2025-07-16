@@ -2,8 +2,10 @@ package com.zsb.blueprint.backend.core.config;
 
 import com.zsb.blueprint.backend.core.annotations.BlueprintFunctionLibrary;
 import com.zsb.blueprint.backend.core.annotations.BlueprintType;
+import com.zsb.blueprint.backend.core.definition.ControlDefinition;
 import com.zsb.blueprint.backend.core.definition.FunctionDefinition;
 import com.zsb.blueprint.backend.core.definition.TypeDefinition;
+import com.zsb.blueprint.backend.core.resolver.ControlResolver;
 import com.zsb.blueprint.backend.core.resolver.FunctionResolver;
 import com.zsb.blueprint.backend.core.resolver.TypeResolver;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ public class BlueprintScanner {
     public static final Map<String, TypeDefinition> PRIMITIVE_TYPE_DEFINITION = new HashMap<>();
     public static final Map<String, TypeDefinition> TYPE_DEFINITION = new HashMap<>();
     public static final Map<String, FunctionDefinition> FUNCTION_DEFINITION = new HashMap<>();
+    public static final Map<String, ControlDefinition> CONTROL_DEFINITION = new HashMap<>();
 
     public void processDefaultType() {
         TypeResolver.PRIMITIVE_CLASSES.forEach(clazz -> {
@@ -31,6 +34,11 @@ public class BlueprintScanner {
             TYPE_DEFINITION.put(clazz.getName(), def);
             PRIMITIVE_TYPE_DEFINITION.put(clazz.getName(), def);
         });
+    }
+
+    public void processDefaultControl() {
+        Map<String, ControlDefinition> map = ControlResolver.processDefaultControl();
+        CONTROL_DEFINITION.putAll(map);
     }
 
     public void processBlueprintType(String basePackage) {
