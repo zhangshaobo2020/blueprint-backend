@@ -21,7 +21,11 @@ class MathLibrary {
         Sum.value = Num1.value + Num2.value
     }
 
-    @BlueprintFunction(displayName = "MathLibrary.TestAddAndMultiple")
+    @BlueprintFunction(
+            executable = false,
+            displayName = "测试多输出节点",
+            description = "输出两个整数的和以及乘积"
+    )
     static void TestAddAndMultiple(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
             @ParamInput("Num2") ParamWrapper<Integer> Num2,
@@ -52,7 +56,7 @@ class MathLibrary {
         Collections.reverse(OutputList.value)
     }
 
-    @BlueprintFunction(displayName = "MathLibrary.TestAddDays")
+    @BlueprintFunction()
     static void TestAddDays(
             @ParamInput("Now") ParamWrapper<LocalDateTime> Now,
             @ParamInput("Days") ParamWrapper<Integer> Days,
@@ -61,7 +65,7 @@ class MathLibrary {
         After.value = Now.value.plusDays(Days.value)
     }
 
-    @BlueprintFunction(displayName = "MathLibrary.TestComplexType")
+    @BlueprintFunction()
     static void TestComplexType(
             @ParamInput("Param1") ParamWrapper<Map<String, Integer>> Param1,
             @ParamInput("Param2") ParamWrapper<List<School>> Param2,

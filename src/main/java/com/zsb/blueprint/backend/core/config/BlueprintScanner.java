@@ -21,6 +21,7 @@ import java.util.Map;
 @Component
 public class BlueprintScanner {
 
+    public static final Map<String, TypeDefinition> PRIMITIVE_TYPE_DEFINITION = new HashMap<>();
     public static final Map<String, TypeDefinition> TYPE_DEFINITION = new HashMap<>();
     public static final Map<String, FunctionDefinition> FUNCTION_DEFINITION = new HashMap<>();
 
@@ -28,6 +29,7 @@ public class BlueprintScanner {
         TypeResolver.PRIMITIVE_CLASSES.forEach(clazz -> {
             TypeDefinition def = TypeResolver.resolveType(clazz);
             TYPE_DEFINITION.put(clazz.getName(), def);
+            PRIMITIVE_TYPE_DEFINITION.put(clazz.getName(), def);
         });
     }
 

@@ -30,6 +30,9 @@ public class FunctionResolver {
             func.setCategory(bf.category());
             func.setDescription(bf.description());
             func.setParams(new ArrayList<>());
+            func.setExecutable(bf.executable());
+            func.setLatent(bf.latent());
+            func.setDisplayName(bf.displayName());
 
             Parameter[] parameters = method.getParameters();
             for (Parameter param : parameters) {

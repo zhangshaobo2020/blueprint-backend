@@ -1,5 +1,6 @@
 package com.zsb.blueprint.backend.core.definition;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.Map;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class TypeDefinition implements Serializable {
 
     private String name;                            // 简短类型名，例如 Integer、String、MyType

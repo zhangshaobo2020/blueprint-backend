@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BlueprintFunction {
 
-    String displayName() default "默认名称";           // 蓝图编辑器上展示的名称
+    String displayName() default "";           // 蓝图编辑器上展示的名称
 
     String description() default "";                  // 蓝图编辑器上展示的详细描述
 

@@ -1,5 +1,6 @@
 package com.zsb.blueprint.backend.core.definition;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ParamDefinition {
 
     private String name;               // 形参名称（例如 Num1）
