@@ -53,6 +53,12 @@
             <version>3.0.25</version>
             <type>pom</type>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.18.0</version>
+        </dependency>
     </dependencies>
 
     <build>

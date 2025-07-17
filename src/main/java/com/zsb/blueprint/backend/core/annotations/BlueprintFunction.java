@@ -13,9 +13,9 @@ public @interface BlueprintFunction {
 
     String description() default "";                  // 蓝图编辑器上展示的详细描述
 
-    String category() default "默认分类";              // 蓝图编辑器上展示的分类
+    String category() default "";              // 蓝图编辑器上展示的分类
 
-    boolean executable() default true;                // 是否是executable节点
+    boolean executable() default false;                // 是否是executable节点
 
     boolean latent() default false;                   // 是否是latent节点
 }

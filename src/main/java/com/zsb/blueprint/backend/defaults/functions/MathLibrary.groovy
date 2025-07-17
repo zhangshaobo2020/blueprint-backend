@@ -12,13 +12,31 @@ import java.time.LocalDateTime
 @BlueprintFunctionLibrary
 class MathLibrary {
 
-//    @BlueprintFunction(displayName = "MathLibrary.TestAdd")
-    static void TestAdd(
+    @BlueprintFunction(displayName = "Integer加法")
+    static void IntegerAdd(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
             @ParamInput("Num2") ParamWrapper<Integer> Num2,
             @ParamOutput("Sum") ParamWrapper<Integer> Sum
     ) {
         Sum.value = Num1.value + Num2.value
+    }
+
+    @BlueprintFunction(displayName = "Integer减法")
+    static void Integer(
+            @ParamInput("Num1") ParamWrapper<Integer> Num1,
+            @ParamInput("Num2") ParamWrapper<Integer> Num2,
+            @ParamOutput("Sum") ParamWrapper<Integer> Sum
+    ) {
+        Sum.value = Num1.value + Num2.value
+    }
+
+    @BlueprintFunction(displayName = "Integer乘法")
+    static void IntegerMultiple(
+            @ParamInput("Num1") ParamWrapper<Integer> Num1,
+            @ParamInput("Num2") ParamWrapper<Integer> Num2,
+            @ParamOutput("Prod") ParamWrapper<Integer> Prod
+    ) {
+        Prod.value = Num1.value * Num2.value
     }
 
     @BlueprintFunction(
@@ -40,7 +58,7 @@ class MathLibrary {
         Div.value = Num1.value / Num2.value
     }
 
-//    @BlueprintFunction(displayName = "MathLibrary.TestAddList")
+    @BlueprintFunction(displayName = "泛型测试")
     static void TestAddList(
             @ParamInput("NumsList") ParamWrapper<List<Integer>> NumsList,
             @ParamOutput("Sum") ParamWrapper<Integer> Sum
@@ -51,7 +69,7 @@ class MathLibrary {
         }
     }
 
-//    @BlueprintFunction(displayName = "MathLibrary.TestReverseList")
+    @BlueprintFunction(displayName = "反转列表")
     static void TestReverseList(
             @ParamInput("InputList") ParamWrapper<List<Integer>> InputList,
             @ParamOutput("OutputList") ParamWrapper<List<Integer>> OutputList
@@ -69,7 +87,7 @@ class MathLibrary {
         After.value = Now.value.plusDays(Days.value)
     }
 
-    @BlueprintFunction()
+    @BlueprintFunction(displayName = "自定义类型测试")
     static void TestComplexType(
             @ParamInput("Param1") ParamWrapper<Map<String, Integer>> Param1,
             @ParamInput("Param2") ParamWrapper<List<School>> Param2,

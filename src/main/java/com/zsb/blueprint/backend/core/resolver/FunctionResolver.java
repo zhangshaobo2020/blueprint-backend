@@ -7,6 +7,7 @@ import com.zsb.blueprint.backend.core.definition.FunctionDefinition;
 import com.zsb.blueprint.backend.core.definition.ParamDefinition;
 import com.zsb.blueprint.backend.core.definition.TypeDefinition;
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -27,7 +28,11 @@ public class FunctionResolver {
             FunctionDefinition func = new FunctionDefinition();
             func.setName(method.getName());
             func.setQualifiedName(clazz.getSimpleName() + "." + method.getName());
-            func.setCategory(bf.category());
+            if (StringUtils.isNotBlank(bf.category())) {
+                func.setCategory(bf.category());
+            } else {
+                func.setCategory(clazz.getSimpleName());
+            }
             func.setDescription(bf.description());
             func.setParams(new ArrayList<>());
             func.setExecutable(bf.executable());
