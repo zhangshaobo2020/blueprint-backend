@@ -12,35 +12,8 @@ import java.time.LocalDateTime
 @BlueprintFunctionLibrary
 class MathLibrary {
 
-    @BlueprintFunction(displayName = "Integer加法")
-    static void IntegerAdd(
-            @ParamInput("Num1") ParamWrapper<Integer> Num1,
-            @ParamInput("Num2") ParamWrapper<Integer> Num2,
-            @ParamOutput("Sum") ParamWrapper<Integer> Sum
-    ) {
-        Sum.value = Num1.value + Num2.value
-    }
-
-    @BlueprintFunction(displayName = "Integer减法")
-    static void Integer(
-            @ParamInput("Num1") ParamWrapper<Integer> Num1,
-            @ParamInput("Num2") ParamWrapper<Integer> Num2,
-            @ParamOutput("Sum") ParamWrapper<Integer> Sum
-    ) {
-        Sum.value = Num1.value + Num2.value
-    }
-
-    @BlueprintFunction(displayName = "Integer乘法")
-    static void IntegerMultiple(
-            @ParamInput("Num1") ParamWrapper<Integer> Num1,
-            @ParamInput("Num2") ParamWrapper<Integer> Num2,
-            @ParamOutput("Prod") ParamWrapper<Integer> Prod
-    ) {
-        Prod.value = Num1.value * Num2.value
-    }
-
     @BlueprintFunction(
-            executable = false,
+            executable = true,
             displayName = "测试多输出",
             description = "输出两个整数的四则运算结果"
     )

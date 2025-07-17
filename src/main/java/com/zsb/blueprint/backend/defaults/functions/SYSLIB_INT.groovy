@@ -7,7 +7,7 @@ import com.zsb.blueprint.backend.core.annotations.ParamOutput
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper
 
 @BlueprintFunctionLibrary
-class IntegerFunctionLibrary {
+class SYSLIB_INT {
 
     @BlueprintFunction(displayName = "加法")
     static void Addition(
