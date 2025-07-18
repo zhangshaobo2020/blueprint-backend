@@ -83,6 +83,7 @@ public class ControlResolver {
         def.setDescription("While(...){...}");
 
         def.getExecPins().add(new ExecPin("Exec", true));
+        def.getExecPins().add(new ExecPin("Break", true));
         def.getExecPins().add(new ExecPin("LoopBody", false));
         def.getExecPins().add(new ExecPin("Completed", false));
 
@@ -106,6 +107,7 @@ public class ControlResolver {
         def.setDescription("For(...,...,...){...}");
 
         def.getExecPins().add(new ExecPin("Exec", true));
+        def.getExecPins().add(new ExecPin("Break", true));
         def.getExecPins().add(new ExecPin("Step", false));
         def.getExecPins().add(new ExecPin("Completed", false));
 

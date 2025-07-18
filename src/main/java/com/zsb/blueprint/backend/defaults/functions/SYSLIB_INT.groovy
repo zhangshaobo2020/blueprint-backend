@@ -9,6 +9,13 @@ import com.zsb.blueprint.backend.core.wrapper.ParamWrapper
 @BlueprintFunctionLibrary
 class SYSLIB_INT {
 
+    @BlueprintFunction(displayName = "打印", executable = true)
+    static void Print(
+            @ParamInput("Num") ParamWrapper<Integer> Num
+    ) {
+        println Num.value
+    }
+
     @BlueprintFunction(displayName = "加法")
     static void Addition(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
