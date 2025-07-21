@@ -10,23 +10,28 @@ import lombok.EqualsAndHashCode;
 @Data
 public class WhileNode extends ExecNode {
     private ParamSource<Boolean> condition;
-    private String bodyExec;
-    private String exitExec;
+    private String loopBodyExec;
+    private String completedExec;
+    private boolean breakFlag = false;
 
-    public WhileNode(String id) {
-        super(id);
+    public WhileNode(String id, String name) {
+        super(id, name);
+    }
+
+    public void doBreak() {
+        this.breakFlag = true;
     }
 
     @Override
     public String execute(ExecutionContext ctx) {
-        if (ctx.isBreak()) {
-            ctx.setBreak(); // 防止残留
-            return exitExec;
+        if (breakFlag) {
+            breakFlag = false; // 重置
+            return completedExec;
         }
-        if (condition.getValue()) {
-            return bodyExec;
+        if (condition != null && Boolean.TRUE.equals(condition.getValue(ctx))) {
+            return loopBodyExec != null ? loopBodyExec : getId();
         } else {
-            return exitExec;
+            return completedExec;
         }
     }
 }

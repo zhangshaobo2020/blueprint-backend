@@ -1,14 +1,10 @@
 package com.zsb.blueprint.backend.core.runtime;
 
-import com.zsb.blueprint.backend.core.runtime.nodes.impl.BranchNode;
-import com.zsb.blueprint.backend.core.runtime.nodes.impl.BreakNode;
-import com.zsb.blueprint.backend.core.runtime.nodes.impl.FunctionCallNode;
-import com.zsb.blueprint.backend.core.runtime.nodes.impl.WhileNode;
+import com.zsb.blueprint.backend.core.runtime.nodes.impl.*;
 import com.zsb.blueprint.backend.core.runtime.params.LiteralValueSource;
 import com.zsb.blueprint.backend.core.runtime.params.NodeOutputSource;
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper;
 import com.zsb.blueprint.backend.defaults.functions.SysLib_Integer;
-import com.zsb.blueprint.backend.defaults.functions.SysLib_Test;
 
 import java.lang.reflect.Method;
 
@@ -16,69 +12,82 @@ public class BlueprintTest {
     public static void main(String[] args) throws Exception {
         ExecutionContext ctx = new ExecutionContext();
 
-        // 1. While 节点
-        WhileNode whileNode = new WhileNode("While1");
-        whileNode.setCondition(new LiteralValueSource<>(true));  // 永远为真，直到Break
-        whileNode.setBodyExec("Random1");
-        whileNode.setExitExec("Func1");
-        ctx.addNode(whileNode);
-
-        // 2. RandomIntegerInRange 节点
-        Method randomMethod = SysLib_Integer.class.getDeclaredMethod("RandomInRange",
+        // === 1. 创建 RandomIntegerInRange 节点 (PureNode) ===
+        Method randomMethod = SysLib_Integer.class.getMethod("RandomInteger",
                 ParamWrapper.class, ParamWrapper.class, ParamWrapper.class);
-        FunctionCallNode randomNode = new FunctionCallNode("Random1", randomMethod);
-        randomNode.addInput("Min", new LiteralValueSource<>(0));
-        randomNode.addInput("Max", new LiteralValueSource<>(10));
-        ParamWrapper<Integer> randomOut = new ParamWrapper<>();
-        randomNode.addOutput("Ret", randomOut);
-        randomNode.setNextExec("GreaterThan1");
-        ctx.addNode(randomNode);
+        FunctionCallPureNode randomNode = new FunctionCallPureNode("RandomNode", "RandomInt", randomMethod);
+        randomNode.setParamInput("Min", new LiteralValueSource<>(1));
+        randomNode.setParamInput("Max", new LiteralValueSource<>(10));
+        ParamWrapper<Integer> randomResult = new ParamWrapper<>();
+        randomNode.setParamOutput("Ret", randomResult);
+        ctx.addPureNode(randomNode);
 
-        // 3. GreaterThan 节点
-        Method gtMethod = SysLib_Integer.class.getDeclaredMethod("GreaterThan",
+        // === 2. 创建 GreaterThan 节点 (PureNode) [random > 2 ?] ===
+        Method greaterMethod = SysLib_Integer.class.getMethod("GreaterThan",
                 ParamWrapper.class, ParamWrapper.class, ParamWrapper.class);
-        FunctionCallNode gtNode = new FunctionCallNode("GreaterThan1", gtMethod);
-        gtNode.addInput("A", new NodeOutputSource<>(randomNode, "Ret"));
-        gtNode.addInput("B", new LiteralValueSource<>(7));
-        ParamWrapper<Boolean> gtOut = new ParamWrapper<>();
-        gtNode.addOutput("Ret", gtOut);
-        gtNode.setNextExec("Branch1");
-        ctx.addNode(gtNode);
+        FunctionCallPureNode greaterNode = new FunctionCallPureNode("GreaterNode", "GreaterThan", greaterMethod);
+        greaterNode.setParamInput("A", new NodeOutputSource<>("RandomNode", "Ret"));
+        greaterNode.setParamInput("B", new LiteralValueSource<>(2));
+        ParamWrapper<Boolean> greaterResult = new ParamWrapper<>();
+        greaterNode.setParamOutput("Ret", greaterResult);
+        ctx.addPureNode(greaterNode);
 
-        // 4. Branch 节点
-        BranchNode branch = new BranchNode("Branch1");
-        branch.setCondition(new NodeOutputSource<>(gtNode, "Ret"));
-        branch.setTrueExec("Break1");
-        branch.setFalseExec("While1");  // 回到While头
-        ctx.addNode(branch);
+        // === 3. ForLoopNode: i = 1..3 ===
+        ForLoopNode forLoopNode = new ForLoopNode("ForLoopNode", "ForLoop");
+        forLoopNode.setRange(new LiteralValueSource<>(1), new LiteralValueSource<>(3));
+        ctx.addExecNode(forLoopNode);
 
-        // 5. Break 节点
-        BreakNode breakNode = new BreakNode("Break1", whileNode);
-        breakNode.setNextExec("Func1");
-        ctx.addNode(breakNode);
+        // === 4. SwitchIntegerNode: 根据 i 选择不同的分支 ===
+        SwitchIntegerNode switchNode = new SwitchIntegerNode("SwitchNode", "SwitchInteger");
+//        switchNode.setCondition(new NodeOutputSource<>("ForLoopNode", "Index")); // 暂不实现
+        switchNode.setCondition(new LiteralValueSource<>(1));
+        ctx.addExecNode(switchNode);
 
-        // 6. TestAddAndMultiple 函数调用
-        Method funcMethod = SysLib_Test.class.getDeclaredMethod("TestAddAndMultiple",
-                ParamWrapper.class, ParamWrapper.class, ParamWrapper.class,
-                ParamWrapper.class, ParamWrapper.class, ParamWrapper.class);
-        FunctionCallNode funcNode = new FunctionCallNode("Func1", funcMethod);
-        funcNode.addInput("Num1", new NodeOutputSource<>(randomNode, "Ret"));
-        funcNode.addInput("Num2", new LiteralValueSource<>(3));
-        ParamWrapper<Integer> addOut = new ParamWrapper<>();
-        ParamWrapper<Long> subOut = new ParamWrapper<>();
-        ParamWrapper<Float> multiOut = new ParamWrapper<>();
-        ParamWrapper<Double> divOut = new ParamWrapper<>();
-        funcNode.addOutput("Add", addOut);
-        funcNode.addOutput("Sub", subOut);
-        funcNode.addOutput("Multi", multiOut);
-        funcNode.addOutput("Div", divOut);
-        funcNode.setNextExec(null); // 结束
-        ctx.addNode(funcNode);
+        // === 5. Print 分支 (FunctionCallExecNode) ===
+        Method printMethod = SysLib_Integer.class.getMethod("Print", ParamWrapper.class);
+        FunctionCallExecNode printCase1 = new FunctionCallExecNode("PrintCase1", "PrintInt", printMethod);
+        printCase1.setParamInput("Num", new LiteralValueSource<>(111));
+        ctx.addExecNode(printCase1);
 
-        // 执行
-        ctx.run("While1");
+        FunctionCallExecNode printCase2 = new FunctionCallExecNode("PrintCase2", "PrintInt", printMethod);
+        printCase2.setParamInput("Num", new LiteralValueSource<>(222));
+        ctx.addExecNode(printCase2);
 
-        System.out.println("最终结果：Add=" + addOut.value + ", Sub=" + subOut.value
-                + ", Multi=" + multiOut.value + ", Div=" + divOut.value);
+        FunctionCallExecNode printCase3 = new FunctionCallExecNode("PrintCase3", "PrintInt", printMethod);
+        printCase3.setParamInput("Num", new LiteralValueSource<>(333));
+        ctx.addExecNode(printCase3);
+
+        // === 6. 绑定 Switch 分支 ===
+        switchNode.addCase(1, "PrintCase1");
+        switchNode.addCase(2, "PrintCase2");
+        switchNode.addCase(3, "PrintCase3");
+        switchNode.setDefaultExec(null);
+
+        // === 7. 设置 ForLoop 执行流 ===
+        forLoopNode.setStepExec("SwitchNode");
+        forLoopNode.setCompletedExec("WhileNode");
+
+        // === 8. WhileNode (Random < 8 才继续) ===
+        WhileNode whileNode = new WhileNode("WhileNode", "WhileRandom");
+        whileNode.setCondition(new NodeOutputSource<>("GreaterNode", "Ret"));
+        whileNode.setLoopBodyExec("ForLoopNode");
+        whileNode.setCompletedExec(null); // 结束
+        ctx.addExecNode(whileNode);
+
+        // === 9. 起点：每次循环前生成新的随机数 ===
+        FunctionCallExecNode randomExec = new FunctionCallExecNode("RandomExec", "GenerateRandom", randomMethod);
+        randomExec.setParamInput("Min", new LiteralValueSource<>(1));
+        randomExec.setParamInput("Max", new LiteralValueSource<>(10));
+        randomExec.setParamOutput("Ret", randomResult);
+        randomExec.setNextExec("WhileNode");
+        ctx.addExecNode(randomExec);
+
+        // === 10. 设置所有分支回流 ===
+        printCase1.setNextExec("ForLoopNode");
+        printCase2.setNextExec("ForLoopNode");
+        printCase3.setNextExec("ForLoopNode");
+
+        // === 11. 执行 ===
+        ctx.run("RandomExec");
     }
 }

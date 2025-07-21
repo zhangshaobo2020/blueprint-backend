@@ -13,24 +13,13 @@ public class BranchNode extends ExecNode {
     private String trueExec;
     private String falseExec;
 
-    public BranchNode(String id) {
-        super(id);
-    }
-
-    public void setCondition(ParamSource<Boolean> condition) {
-        this.condition = condition;
-    }
-
-    public void setTrueExec(String trueExec) {
-        this.trueExec = trueExec;
-    }
-
-    public void setFalseExec(String falseExec) {
-        this.falseExec = falseExec;
+    public BranchNode(String id, String name) {
+        super(id, name);
     }
 
     @Override
     public String execute(ExecutionContext ctx) {
-        return condition.getValue() ? trueExec : falseExec;
+        boolean cond = condition.getValue(ctx);
+        return cond ? trueExec : falseExec;
     }
 }

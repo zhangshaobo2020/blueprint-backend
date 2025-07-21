@@ -25,8 +25,6 @@ public class ControlResolver {
         map.put("CONTROL.ForLoop", definitionForLoop());
         // SwitchInteger节点
         map.put("CONTROL.SwitchInteger", definitionSwitchInteger());
-        // ExecuteFunction节点
-        map.put("CONTROL.ExecuteFunction", definitionExecuteFunction());
         return map;
     }
 
@@ -160,20 +158,6 @@ public class ControlResolver {
                         )
                 )
         );
-        return def;
-    }
-
-    private static ControlDefinition definitionExecuteFunction() {
-        ControlDefinition def = new ControlDefinition();
-        def.setName("ExecuteFunction");
-        def.setDisplayName("执行函数");
-        def.setQualifiedName("CONTROL.ExecuteFunction");
-        def.setDescription("函数执行");
-
-        def.getExecPins().add(new ExecPin("Exec", true));
-        def.getExecPins().add(new ExecPin("Exec", false));
-
-        def.setExecutable(true);
         return def;
     }
 }

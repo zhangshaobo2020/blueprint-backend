@@ -121,7 +121,7 @@ public class SysLib_Integer {
     }
 
     @BlueprintFunction(displayName = "随机整数")
-    public static void RandomInRange(
+    public static void RandomInteger(
             @ParamInput("Min") ParamWrapper<Integer> Min,
             @ParamInput("Max") ParamWrapper<Integer> Max,
             @ParamOutput("Ret") ParamWrapper<Integer> Ret
@@ -130,6 +130,7 @@ public class SysLib_Integer {
             throw new IllegalArgumentException("Min cannot be greater than Max");
         }
         Ret.value = new Random().nextInt((Max.value - Min.value) + 1) + Min.value;
+        System.out.println("Random Integer: " + Ret.value);
     }
 
     @BlueprintFunction(displayName = "等于")
