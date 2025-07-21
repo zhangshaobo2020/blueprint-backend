@@ -9,7 +9,9 @@ import lombok.Data;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @SuppressWarnings("unchecked")
@@ -17,6 +19,8 @@ public class ExecutionContext {
 
     private final Map<String, ExecNode> execNodes = new HashMap<>();
     private final Map<String, PureNode> pureNodes = new HashMap<>();
+
+    private final Set<String> breakRequests = new HashSet<>();
 
     public void addExecNode(ExecNode node) {
         execNodes.put(node.getId(), node);
@@ -60,5 +64,18 @@ public class ExecutionContext {
             args[i++] = out;
         }
         method.invoke(null, args);
+    }
+
+    // ============= Break 支持 =============
+    public void notifyBreak(String loopNodeId) {
+        breakRequests.add(loopNodeId);
+    }
+
+    public boolean isBreakRequested(String loopNodeId) {
+        return breakRequests.contains(loopNodeId);
+    }
+
+    public void clearBreak(String loopNodeId) {
+        breakRequests.remove(loopNodeId);
     }
 }

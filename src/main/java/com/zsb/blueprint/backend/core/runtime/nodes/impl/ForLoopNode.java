@@ -21,6 +21,9 @@ public class ForLoopNode extends ExecNode {
     // 缓存值
     private int cachedIndex;
 
+    public static String INDEX = "Index";
+    public static String BREAK = "Break";
+
     public ForLoopNode(String id, String name) {
         super(id, name);
     }
@@ -43,17 +46,22 @@ public class ForLoopNode extends ExecNode {
 
     public void doBreak() {
         this.breakFlag = true;
+        this.execute(getCtx());
     }
 
     @Override
     public String execute(ExecutionContext ctx) {
+        // 检查 Break 信号
+        if (ctx.isBreakRequested(getId())) {
+            ctx.clearBreak(getId());
+            return completedExec;
+        }
         if (!started) {
             currentIndex = from.getValue(ctx);
             started = true;
         }
         if (breakFlag) {
             breakFlag = false;
-            started = false;
             return completedExec;
         }
         if (currentIndex < to.getValue(ctx)) {

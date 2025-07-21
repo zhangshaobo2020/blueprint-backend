@@ -22,7 +22,7 @@ public class BlueprintTest2 {
         Method printMethod = SysLib_Integer.class.getMethod("Print", ParamWrapper.class);
         FunctionCallExecNode printString1 = new FunctionCallExecNode("printString1", "printString1", printMethod);
         // 从父级ForLoopNode获取Index
-        printString1.setParamInput("Str", new NodeOutputSource<>("forLoopNode1", "Index"));
+        printString1.setParamInput("Str", new NodeOutputSource<>("forLoopNode1", ForLoopNode.INDEX));
         printString1.setNextExec("forLoopNode1");
         ctx.addExecNode(printString1);
 
@@ -30,7 +30,6 @@ public class BlueprintTest2 {
         printString2.setParamInput("Str", new LiteralValueSource<>("结束了！！！"));
         printString2.setNextExec(null);
         ctx.addExecNode(printString2);
-
 
         ctx.run("forLoopNode1");
     }

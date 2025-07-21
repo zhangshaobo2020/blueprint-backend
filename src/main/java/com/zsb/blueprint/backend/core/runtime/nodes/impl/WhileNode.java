@@ -14,16 +14,24 @@ public class WhileNode extends ExecNode {
     private String completedExec;
     private boolean breakFlag = false;
 
+    public static String BREAK = "Break";
+
     public WhileNode(String id, String name) {
         super(id, name);
     }
 
     public void doBreak() {
         this.breakFlag = true;
+        this.execute(getCtx());
     }
 
     @Override
     public String execute(ExecutionContext ctx) {
+        // 检查 Break 信号
+        if (ctx.isBreakRequested(getId())) {
+            ctx.clearBreak(getId());
+            return completedExec;
+        }
         if (breakFlag) {
             breakFlag = false; // 重置
             return completedExec;
