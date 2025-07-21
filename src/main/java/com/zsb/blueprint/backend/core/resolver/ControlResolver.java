@@ -17,14 +17,16 @@ public class ControlResolver {
         map.put("CONTROL.BeginPlay", definitionBeginPlay());
         // EndPlay节点
         map.put("CONTROL.EndPlay", definitionEndPlay());
-        // IfElse节点
-        map.put("CONTROL.IfElse", definitionIfElse());
+        // Branch节点
+        map.put("CONTROL.Branch", definitionBranch());
         // While节点
         map.put("CONTROL.While", definitionWhile());
         // ForLoop节点
         map.put("CONTROL.ForLoop", definitionForLoop());
-        // SwitchInteger节点
-        map.put("CONTROL.SwitchInteger", definitionSwitchInteger());
+        // Break节点
+        map.put("CONTROL.Break", definitionBreak());
+        // SwitchInteger节点 暂缓实现，需要结合动态Pin
+        // map.put("CONTROL.SwitchInteger", definitionSwitchInteger());
         return map;
     }
 
@@ -50,11 +52,11 @@ public class ControlResolver {
         return def;
     }
 
-    private static ControlDefinition definitionIfElse() {
+    private static ControlDefinition definitionBranch() {
         ControlDefinition def = new ControlDefinition();
-        def.setName("IfElse");
+        def.setName("Branch");
         def.setDisplayName("Branch分支");
-        def.setQualifiedName("CONTROL.IfElse");
+        def.setQualifiedName("CONTROL.Branch");
         def.setDescription("If{...}Else{...}");
 
         def.getExecPins().add(new ExecPin("Exec", true));
@@ -81,7 +83,7 @@ public class ControlResolver {
         def.setDescription("While(...){...}");
 
         def.getExecPins().add(new ExecPin("Exec", true));
-        def.getExecPins().add(new ExecPin("Break", true));
+//        def.getExecPins().add(new ExecPin("Break", true));
         def.getExecPins().add(new ExecPin("LoopBody", false));
         def.getExecPins().add(new ExecPin("Completed", false));
 
@@ -105,7 +107,7 @@ public class ControlResolver {
         def.setDescription("For(...,...,...){...}");
 
         def.getExecPins().add(new ExecPin("Exec", true));
-        def.getExecPins().add(new ExecPin("Break", true));
+//        def.getExecPins().add(new ExecPin("Break", true));
         def.getExecPins().add(new ExecPin("Step", false));
         def.getExecPins().add(new ExecPin("Completed", false));
 
@@ -158,6 +160,17 @@ public class ControlResolver {
                         )
                 )
         );
+        return def;
+    }
+
+    private static ControlDefinition definitionBreak() {
+        ControlDefinition def = new ControlDefinition();
+        def.setName("Break");
+        def.setDisplayName("中断循环");
+        def.setQualifiedName("CONTROL.Break");
+        def.setDescription("中断循环");
+
+        def.getExecPins().add(new ExecPin("Exec", true));
         return def;
     }
 }

@@ -8,6 +8,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public WebResult<?> handleException(Exception e) {
+        e.printStackTrace();
         return WebResult.failure(e.getMessage());
     }
 }
