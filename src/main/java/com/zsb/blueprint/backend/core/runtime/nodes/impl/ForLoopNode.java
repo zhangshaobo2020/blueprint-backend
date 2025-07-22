@@ -36,7 +36,7 @@ public class ForLoopNode extends ExecNode {
 
     @Override
     public ParamWrapper<?> getOutputParam(String outputName) {
-        if ("Index".equals(outputName)) {
+        if (INDEX.equals(outputName)) {
             return new ParamWrapper<>(cachedIndex);
         } else {
             return super.getOutputParam(outputName);

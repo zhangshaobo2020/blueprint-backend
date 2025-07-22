@@ -5,7 +5,7 @@ import com.zsb.blueprint.backend.core.annotations.BlueprintFunctionLibrary;
 import com.zsb.blueprint.backend.core.annotations.ParamInput;
 import com.zsb.blueprint.backend.core.annotations.ParamOutput;
 import com.zsb.blueprint.backend.core.wrapper.ParamWrapper;
-import com.zsb.blueprint.backend.defaults.types.School;
+import com.zsb.blueprint.backend.defaults.types.Student;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -65,11 +65,37 @@ public class SysLib_Test {
     @BlueprintFunction(displayName = "自定义类型测试")
     public static void TestComplexType(
             @ParamInput("Param1") ParamWrapper<Map<String, Integer>> Param1,
-            @ParamInput("Param2") ParamWrapper<List<School>> Param2,
+            @ParamInput("Param2") ParamWrapper<List<Student>> Param2,
             @ParamOutput("Param3") ParamWrapper<Integer> Param3
     ) {
         System.out.println(Param1);
         System.out.println(Param2);
         System.out.println(Param3);
+    }
+
+    @BlueprintFunction(
+            executable = true,
+            displayName = "测试多输出",
+            description = "输出两个整数的加减结果"
+    )
+    public static void TestAddAndMinus(
+            @ParamInput("Num1") ParamWrapper<Integer> Num1,
+            @ParamInput("Num2") ParamWrapper<Integer> Num2,
+            @ParamOutput("Add") ParamWrapper<Integer> Add,
+            @ParamOutput("Sub") ParamWrapper<Integer> Sub
+    ) {
+        Add.value = Num1.value + Num2.value;
+        Sub.value = (Num1.value - Num2.value);
+    }
+
+    @BlueprintFunction(
+            executable = true
+    )
+    public static void AAABBB(
+            @ParamInput("Num1") ParamWrapper<Integer> Num1,
+            @ParamInput("Num2") ParamWrapper<Integer> Num2,
+            @ParamOutput("Add") ParamWrapper<Integer> Add
+    ) {
+        Add.value = Num1.value + Num2.value;
     }
 }

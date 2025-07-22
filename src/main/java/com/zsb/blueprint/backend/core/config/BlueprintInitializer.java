@@ -11,15 +11,17 @@ public class BlueprintInitializer implements ApplicationRunner {
 
     @Resource
     private BlueprintScanner blueprintScanner;
+    @Resource
+    private CustomPathConfig customPathConfig;
 
     @Override
     public void run(ApplicationArguments args) {
         // 解析默认的内置Java类型
         blueprintScanner.processDefaultType();
         // 扫描自定义的@BlueprintType
-        blueprintScanner.processBlueprintType("com.zsb.blueprint.backend.defaults.types");
+        blueprintScanner.processBlueprintType(customPathConfig.blueprintTypePath);
         // 扫描自定义的@BlueprintFunctionLibrary
-        blueprintScanner.processBlueprintFunction("com.zsb.blueprint.backend.defaults.functions");
+        blueprintScanner.processBlueprintFunction(customPathConfig.blueprintFunctionPath);
         // 解析默认的流程控制节点
         blueprintScanner.processDefaultControl();
     }

@@ -24,3 +24,6 @@ server:
   port: 9090
   servlet:
     context-path: /api
+blueprint-backend:
+  blueprint-type-path: com.zsb.blueprint.backend.defaults.types
+  blueprint-function-path: com.zsb.blueprint.backend.defaults.functions

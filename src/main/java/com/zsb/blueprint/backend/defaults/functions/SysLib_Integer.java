@@ -130,7 +130,6 @@ public class SysLib_Integer {
             throw new IllegalArgumentException("Min cannot be greater than Max");
         }
         Ret.value = new Random().nextInt((Max.value - Min.value) + 1) + Min.value;
-        System.out.println("Random Integer: " + Ret.value);
     }
 
     @BlueprintFunction(displayName = "等于")

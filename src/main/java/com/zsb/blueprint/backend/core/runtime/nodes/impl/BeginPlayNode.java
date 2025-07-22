@@ -15,10 +15,6 @@ public class BeginPlayNode extends ExecNode {
         super(id, name);
     }
 
-    public void setNextExec(String nextExec) {
-        this.nextExec = nextExec;
-    }
-
     @Override
     public String execute(ExecutionContext ctx) {
         // BeginPlay 仅作为起点，直接进入下一节点
