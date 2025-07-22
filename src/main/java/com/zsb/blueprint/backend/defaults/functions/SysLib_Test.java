@@ -88,9 +88,7 @@ public class SysLib_Test {
         Sub.value = (Num1.value - Num2.value);
     }
 
-    @BlueprintFunction(
-            executable = true
-    )
+    @BlueprintFunction()
     public static void AAABBB(
             @ParamInput("Num1") ParamWrapper<Integer> Num1,
             @ParamInput("Num2") ParamWrapper<Integer> Num2,
